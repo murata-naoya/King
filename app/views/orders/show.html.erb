@@ -1,0 +1,56 @@
+<% @total_fee = 0 %>
+<% @delivery_fee = 500 %>
+<% @total_fee = @order.total_price - @delivery_fee %>
+
+<h1> 購入詳細 </h1>
+<table class="table table-striped">
+	<thead>
+		<th>購入者: <%= @order.user.full_name(@order.user) %><br>宛名: <%= @order.address_name %></th>
+		<th>購入日: <%= @order.created_at.strftime('%Y/%m/%d %H:%M') %></th>
+		<th>郵便番号: <%= @order.postal_code %></th>
+		<th>住所: <%= @order.address %></th>
+		<th><%= link_to '購入一覧へ戻る', orders_path %></th>
+	</thead>
+
+	<tbody>
+		<tr>
+			<th></th>
+			<th>商品名</th>
+			<th>価格</th>
+			<th>枚数</th>
+			<th></th>
+		</tr>
+		<% @order.order_items.each do |order_item| %>
+		<tr>
+			<% product = Product.with_discarded.find(order_item.product_id) %>
+			<th><%= attachment_image_tag product, :jacket_image, :fill, 100, 100, :class => 'img-circle', fallback: "no_image.jpg" %></th>
+			<th><%= product.product_name %></th>
+			<th><%= order_item.price %>円</th>
+			<th><%= order_item.count %>枚</th>
+			<th></th>
+		</tr>
+		<% end %>
+	</tbody>
+
+	<tfoot>
+		<th>購入枚数: <%= @order.total_count %>枚<br>商品の小計: <%= @total_fee %>円</th>
+		<th>送料: <%= @delivery_fee %>円</th>
+		<th>合計金額: <%= @order.total_price %>円</th>
+		<th><% if @order.option == 0 %>
+				支払い方法: 銀行振込
+			<% elsif @order.option == 1 %>
+				支払い方法: クレジットカード
+			<% else %>
+				支払い方法: 代引き
+			<% end %>
+		</th>
+		<th><% if @order.delivery_status == 0 %>
+				発送状況: 配送前
+			<% elsif @order.delivery_status == 1 %>
+				発送状況: 配送中
+			<% else @order.delivery_status == 2 %>
+				発送状況: 配送済み
+			<% end %>
+		</th>
+	</tfoot>
+</table>

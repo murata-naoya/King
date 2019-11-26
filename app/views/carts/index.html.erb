@@ -1,0 +1,37 @@
+<h1> カート詳細 </h1>
+
+<% @total = 0 %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>画像</th>
+      <th>商品名</th>
+      <th>アーティスト名</th>
+      <th>価格</th>
+      <th>購入枚数</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @carts.each do |cart| %>
+    <tr>
+      <th><%= attachment_image_tag cart.product, :jacket_image, :fill, 80, 80, :class => 'img-circle', fallback: "no_image.jpg" %></th>
+      <th><%= cart.product.product_name %></th>
+      <th><%= cart.product.artist.name %></th>
+      <th><%= cart.product.price %>円 </th>
+      <th><% @total += cart.product.price.to_i * cart.count %>
+      <%= form_for [cart.product, cart] do |f| %>
+        <%= f.number_field :count, min: 0, max: cart.product.stock %>
+        <%= f.submit "更新" %>
+      <% end %></th>
+      <th><%= link_to "詳細", product_path(cart.product) , :class => "btn btn-primary" %></th>
+      <th><%= link_to "カートから外す", product_cart_path(product_id: cart.product.id, id: cart.id), method: :delete, :class => "btn btn-primary" %></th>
+    <% end %>
+    </th>
+  </tbody>
+</table>
+    <div>合計金額: <%= @total %>円<div>
+      <%= link_to "商品一覧に戻る", products_path, :class => "btn btn-primary" %>
+      <%= link_to "購入画面へ", order_items_path, method: :post , :class => "btn btn-primary" %>

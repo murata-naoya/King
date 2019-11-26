@@ -1,0 +1,35 @@
+// Place all the styles related to the admin/genres controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#genre {
+    padding: 50px 20px;
+    margin: 2em 0;
+    font-weight: bold;
+    color: #6091d3;/*文字色*/
+    background-color: #62F1BC;
+    border: 5px solid #000;
+    width: 50%;
+    margin: 200px auto;
+    text-align: center;
+}
+
+h4 {
+	margin: 10px;
+}
+
+.form-create {
+	margin-top: 20px;
+	font-size: 16px;
+}
+
+.form-control {
+	width: 200px;
+	height: 30px;
+	font-size: 14px;
+}
+
+#genres-index {
+	margin: 50px auto;
+	width: 90%;
+}

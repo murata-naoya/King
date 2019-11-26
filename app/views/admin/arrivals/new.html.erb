@@ -1,0 +1,30 @@
+<% if @arrival.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= @arrival.errors.count %> error prohibited this user from being saved: </h2>
+                <ul>
+                <% @arrival.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+               <% end %>
+                </ul>
+              </div>
+          <% end %>
+
+
+<h2>入荷画面</h2>
+
+<%= form_for([:admin, @arrival]) do |f| %>
+
+<h4>アルバム名(商品名)</h4>
+<%= f.collection_select(:product_id, Product.all, :id, :product_name, { :prompt => "選択してください" , :multiple => true } ) %>
+
+<h4>入荷枚数</h4>
+<%= f.number_field :arrival_count, min:0 %>
+
+<h4>入荷日</h4>
+<%= f.date_field :arrival_date %>
+
+<%= f.submit "入荷" %>
+
+<% end %>
+
+<%= link_to "商品一覧へ戻る", admin_products_path %>

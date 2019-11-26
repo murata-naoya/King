@@ -1,0 +1,41 @@
+<h1> 購入詳細 </h1>
+<h2> 購入商品一覧 </h2>
+<% @total_price = 0 %>
+<% @total_amount = 0 %>
+<% @total_fee = 0 %>
+<% @delivery_fee = 500 %>
+<% current_user.carts.each do |cart| %>
+	<% order_item = OrderItem.find_by(product_id: cart.product_id, order_id: 0)%>
+	<%= cart.product.product_name %>
+	<%= cart.product.artist.name %>
+	<%= order_item.price %>
+	<%= order_item.count %>
+	<% @total_fee += order_item.price * order_item.count %>
+	<% @total_amount += order_item.count %>
+<% end %>
+<%= link_to "カートへ戻る", carts_path %>
+
+<p> 商品数: <%= @total_amount %>点 </p>
+<p> 商品の小計: <%= @total_fee %>円 </p>
+<p> 送料: <%= @delivery_fee %>円</p>
+<% @total_price = @total_fee + @delivery_fee %>
+<p> 商品合計: <%= @total_price %>円</p>
+
+<% if @destination.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger">
+    <ul>
+      <% @destination.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<h2> 配送先指定  </h2>
+<%= form_for (@destination) do |f| %>
+<p> 宛先: <%= f.text_field :address_name %> </p>
+<p> 郵便番号: <%= f.text_field :postal_code %> </p>
+<p> 住所: <%= f.text_field :address %> </p>
+<p> 電話番号: <%= f.text_field :phone_number %> </p>
+<%= f.submit "この住所に発送する" %>
+<% end %>

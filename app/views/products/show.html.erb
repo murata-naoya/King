@@ -1,0 +1,107 @@
+<div id="product-show">
+
+	<div class="col-md-5">
+		<h2 class="product-title">商品詳細</h2>
+		<div class="jacket-img-circle">
+		<%= attachment_image_tag @product, :jacket_image, :fill, 150, 150, fallback: "no_image.jpg" %>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12 wrapper-review">
+				<h2>レビュー</h2>
+					<%= link_to "レビューを書く", new_review_path(product_id: @product.id), :class => "btn btn-primary" %>
+
+				<table class="table table-striped">
+					<tr>
+						<th>ユーザ</th>
+						<th>レビュー</th>
+						<th></th>
+						<th></th>
+					</tr>
+
+					<% @review.each do |review| %>
+					<tr>
+						<th><%= attachment_image_tag review.user, :profile_image, :size => '40x40', :class => 'img-circle', fallback: "no_image.jpg" %>
+							<br><%= review.user.full_name(review.user) %></th>
+						<th class="review-text"><%= review.review %></th>
+						<% if user_signed_in? %>
+							<% if review.user_id == current_user.id %>
+							<th><%= link_to "編集", edit_review_path(review) %></th>
+							<th><%= link_to "削除", review_path(review), method: :delete %> </th>
+							<% end %>
+						<% end %>
+					</tr>
+					<% end %>
+				</table>
+				<%= paginate @review, class: "paginate" %>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6  col-md-offset-1 wrapper-review">
+		<div class="product-name">
+			シングル/アルバム名：<%= @product.product_name %>
+		</div><br>
+
+		<div class="product-artitst-name">
+			アーティスト名：<%= @product.artist.name %>
+		</div><br>
+
+		<div class="product-price">
+			価格：<%= @product.price %>円(税込)
+		</div><br>
+
+		<div class="product-stock">
+			在庫数：<%= @stock %>
+		</div><br>
+
+		<div class="product-status">
+			ステータス：<%= @product.sell_status %>
+		</div><br>
+
+		<div class="product-label-name">
+			レーベル名：<%= @product.label.name %>
+		</div><br>
+
+		<div class="product-genre-name">
+			ジャンル：<%= @product.genre.name %>
+		</div><br>
+		<% if user_signed_in? %>
+			<% if @product.stock != 0 %>
+			 	<% if @cart.id.blank? %>
+			  	<%= form_for [@product, @cart] do |f| %>
+						<%=  f.number_field :count, min:0, max: @stock %>
+						<%=  f.submit "カートに入れる" %>
+					<% end %>
+				<% else %>
+					<%= form_for [@product, @cart], url: cart_change_path(@cart), action: "patch" do |f| %>
+						<%=  f.number_field :count, min:0, max: @stock %>
+						<%=  f.submit "カートに入れる" %>
+					<% end %>
+				<% end %>
+			<% end %>
+		<% else %>
+			<%= link_to "カートに入れる", new_user_session_path %>
+		<% end %>
+
+
+		<div class="product-song-name wrapper-review">
+			<h4 class="">曲一覧</h4>
+			<% @discs.each.with_index(1) do |disc, index| %>
+					<%= (index) %>枚目
+			<table class="table table-striped">
+				<tr>
+					<th>曲番号</th>
+					<th>曲名</th>
+				</tr>
+				<% disc.songs.each.with_index(1) do |song,index| %>
+					<tr>
+						<th><%= index %></th>
+						<th><%= song.name %></th>
+					</tr>
+					<% end %>
+			</table>
+			<% end %>
+		</div>
+	</div>
+</div>

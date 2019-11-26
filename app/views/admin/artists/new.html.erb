@@ -1,0 +1,21 @@
+<% if @artist.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @artist.errors.count %> error prohibited this user from being saved: </h2>
+      <ul>
+      <% @artist.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+     <% end %>
+      </ul>
+    </div>
+<% end %>
+
+
+<div id="artist">
+<h2>アーティスト登録画面</h2>
+<%= form_for([:admin, @artist]) do |f| %>
+<h4>アーティスト名</h4>
+<%= f.text_field :name, class: "form-control", placeholder: "アーティスト名を入力" %><br>
+<%= f.submit "投稿", class: "form-create" %>
+<% end %>
+</div>
+

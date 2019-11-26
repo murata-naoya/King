@@ -1,0 +1,89 @@
+<% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @user.errors.count %> error prohibited this user from being saved: </h2>
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+     <% end %>
+      </ul>
+    </div>
+<% end %>
+
+<h1>プロフィール編集</h1>
+
+<%= form_for @user do |f| %>
+
+<div class="profile">
+  <div class="field">
+    <div class="label1">
+        <%= f.label "プロフィール画像", for:"form_label" %>
+    </div>
+    <div class="profile_pic">
+      <%= attachment_image_tag @user, :profile_image, format: 'jpeg', fallback: "no_image.jpg", size: "100x100", class:"pic_shape" %>
+      <%= f.attachment_field :profile_image, style: "margin: 0 auto;" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="label1">
+        <%= f.label "性(漢字)", for:"form_label" %>
+    </div>
+        <%= f.text_field :last_name_characters, autofocus: true, class:"info" %>
+  </div>
+
+  <div class="field">
+    <div class="label1">
+        <%= f.label "名(漢字)", for:"form_label" %>
+    </div>
+        <%= f.text_field :first_name_characters, autofocus: true, class:"info" %>
+  </div>
+
+  <div class="field">
+    <div class="label1">
+        <%= f.label "性(カナ)", for:"form_label" %>
+    </div>
+        <%= f.text_field :last_name_kana, autofocus: true, class:"info" %>
+  </div>
+
+  <div class="field">
+    <div class="label1">
+        <%= f.label "名(カナ)", for:"form_label" %>
+    </div>
+        <%= f.text_field :first_name_kana, autofocus: true, class:"info" %>
+  </div>
+
+  <div class="field">
+    <div class="label1">
+        <%= f.label "メールアドレス", for:"form_label" %>
+    </div>
+        <%= f.email_field :email, autofocus: true, class:"info" %>
+  </div>
+
+  <div class="field">
+    <div class="label1">
+        <%= f.label "郵便番号", for:"form_label" %>
+    </div>
+        <%= f.text_field :postal_code, autofocus: true, class:"info" %>
+  </div>
+
+  <div class="field">
+    <div class="label1">
+        <%= f.label "住所", for:"form_label" %>
+    </div>
+        <%= f.text_field :address, autofocus: true, class:"info" %>
+  </div>
+
+  <div class="field">
+    <div class="label1">
+        <%= f.label "電話番号", for:"form_label" %>
+    </div>
+        <%= f.text_field :phone_number, autofocus: true, class:"info" %>
+  </div>
+
+  <div class="actions label1">
+    <%= link_to "マイページへ戻る", user_path(@user), class:"btn btn-primary btn-next" %>
+    <%= f.submit "マイページ更新", class:"btn btn-primary btn-next" %>
+    <%= link_to "退会する", user_path(@user), method: :delete, "data-confirm" => "本当に退会しますか？", class:"btn btn-danger btn-next" %>
+  </div>
+</div>
+<% end %>

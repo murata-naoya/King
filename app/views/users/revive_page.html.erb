@@ -1,0 +1,14 @@
+<h2>復元フォーム</h2>
+<%= form_for @user, url: revive_path, action: "post" do |f| %>
+  <div class="field">
+    <%= f.label "メールアドレス" %><br />
+    <%= f.email_field :email, autofocus: true %>
+  </div>
+  <div class="field">
+    <%= f.label "パスワード" %><br />
+    <%= f.password_field :password, autocomplete: "current-password" %>
+  </div>
+  <div class="actions">
+    <%= f.submit "復元" %>
+  </div>
+<% end %>

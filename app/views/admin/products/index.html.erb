@@ -1,0 +1,51 @@
+
+<div id="product">
+	<h1 class="product-class">商品一覧</h1>
+		<%= link_to "商品入荷", new_admin_arrival_path, class: "btn btn-primary" %>
+		<%= link_to "商品登録", new_admin_product_path, class: "btn btn-primary" %>
+		<%= link_to "アーティスト登録", new_admin_artist_path, class: "btn btn-primary" %>
+		<%= link_to "ジャンル登録", new_admin_genre_path, class: "btn btn-primary" %>
+		<%= link_to "レーベル登録", new_admin_label_path, class: "btn btn-primary" %>
+
+	<div class="wrapper clearfix">
+	<% @products.each do |product| %>
+		<div class="wrapper-contents clearfix">
+			<div class="left-index">
+			<%= attachment_image_tag product, :jacket_image, :fill, 100, 100, :class => 'img-circle', fallback: "no_image.jpg" %>
+			</div>
+
+			<% if product.discarded_at.nil? %>
+				<div class="center-index">
+						<div class="">商品ID：<%= product.id %></div>
+						<div class="">商品名：<%= product.product_name %></div>
+						<div class="">アーティスト：<%= product.artist.name %></div>
+						<div class="">価格：<%= product.price %></div>
+						<div class="">ステータス：<%= product.sell_status %></div>
+						<div class="">在庫数：<%= product.stock %></div>
+				</div>
+
+				<div class="right-index">
+					<%= link_to "詳細", admin_product_path(product), class: "btn btn-primary" %>
+					<%= link_to "商品入荷", new_admin_arrival_path, class: "btn btn-primary" %>
+					<%= link_to "編集", edit_admin_product_path(product), class: "btn btn-primary" %>
+					<%= link_to "削除", admin_product_path(product), method: :delete,  "data-confirm" => "本当に削除しますか？", class:"btn btn-danger btn-next" %>
+				</div>
+			<% else %>
+			  <% artist = Artist.with_discarded.find(product.artist_id) %>
+				<div class="center-index">
+						<div class="">商品ID：<%= product.id %></div>
+						<div class="">商品名：<%= product.product_name %></div>
+						<div class="">アーティスト：<%= artist.name %></div>
+						<div class="">価格：<%= product.price %></div>
+						<div class="">ステータス：削除済み</div>
+				</div>
+
+				<div class="right-index">
+					<%= link_to "詳細", admin_product_path(product), class: "btn btn-primary" %>
+				</div>
+		  <% end %>
+		</div>
+	<% end %>
+	</div>
+
+</div>

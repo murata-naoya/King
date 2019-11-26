@@ -1,0 +1,32 @@
+<div id="product">
+	<h1>商品一覧</h1>
+
+	<%= form_tag search_products_path, method: :get do %>
+		<%= text_field_tag "search", params[:search] %>
+		<%#= select_tag "search_products", options_for_select([["商品名", "0"],["アーティスト", "1"],["曲名", "2"],["ジャンル", "3"],["レーベル", "4"]]), {:prompt => "選択してください"} %>
+		<%= submit_tag "検索" %>
+	<% end %>
+
+	<div class="wrapper clearfix">
+	<% @products.each do |product| %>
+		<div class="wrapper-contents clearfix">
+			<div class="left-index">
+			<%= attachment_image_tag product, :jacket_image, :fill, 100, 100, :class => 'img-circle', fallback: "no_image.jpg" %>
+			</div>
+
+			<div class="center-index">
+					<div class="">商品名：<%= product.product_name %></div>
+					<div class="">アーティスト：<%= product.artist.name %></div>
+					<div class="">価格：<%= product.price %></div>
+					<div class="">ステータス：<%= product.sell_status %></div>
+					<div class="">在庫数：<%= product.stock %></div>
+			</div>
+
+			<div class="right-index">
+				<%= link_to "詳細", product_path(product), :class => "btn btn-primary" %>
+			</div>
+		</div>
+	<% end %>
+	</div>
+
+</div>

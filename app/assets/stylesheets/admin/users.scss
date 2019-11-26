@@ -1,0 +1,40 @@
+// Place all the styles related to the admin/genres controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#admin_user_index{
+    width: 100%;
+}
+.aui_content{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+} 
+
+// admin_user_edit
+
+.info1 {
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    // font-weight: bold;
+    color: black;/*文字色*/
+    background-color: rgba($color: red, $alpha: 0.3);
+    border: solid 1px black;/*線*/
+    border-radius: 10px;/*角の丸み*/
+    text-align: center;
+}
+.info2 {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    // font-weight: bold;
+    color: black;/*文字色*/
+    background-color: rgba($color: red, $alpha: 0.3);
+    border: solid 1px black;/*線*/
+    border-radius: 10px;/*角の丸み*/
+    text-align: center;
+}
+.label2{
+    color: black;
+}

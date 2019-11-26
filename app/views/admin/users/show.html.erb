@@ -1,0 +1,42 @@
+<h1>会員詳細</h1>
+
+    <div class="container">
+        <div class="row">
+
+        <div class="col-xs-3">
+
+            <div class="profile1">
+                <div class="field1">
+                    <div class="profile_pic1">
+                    <%= attachment_image_tag @user, :profile_image, format: 'jpeg', fallback: "no_image.jpg", size: "100x100", class:"pic_shape" %>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xs-9">
+
+            <label>氏名</label>
+            <p>性：<%= @user.last_name_characters %> 名：<%= @user.first_name_characters %></p>
+            <label>カナ</label>
+            <p>性：<%= @user.last_name_kana %> 名：<%= @user.first_name_kana %></p>
+            <label>郵便番号</label>
+            <p>〒<%= @user.postal_code%></p>
+            <label>住所</label>
+            <p><%= @user.address%></p>
+            <label>電話番号</label>
+            <p><%= @user.phone_number%></p>
+            <label>メールアドレス</label>
+            <p><%= @user.email%></p>
+
+
+            <div class="actions label2">
+                <%= link_to "購入履歴", admin_orders_path(id: @user.id), class:"btn btn-primary btn-next" %>
+                <%= link_to "ユーザー一覧へ戻る", admin_users_path, class:"btn btn-primary btn-next" %>
+                <%= link_to "編集", edit_admin_user_path(@user), class:"btn btn-primary btn-next" %>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<% if @label.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @label.errors.count %> error prohibited this user from being saved: </h2>
+      <ul>
+      <% @label.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+     <% end %>
+      </ul>
+    </div>
+<% end %>
+
+<div id="label">
+<h2>レーベル登録画面</h2>
+<%= form_for([:admin, @label]) do |f| %>
+<h4>レーベル名</h4>
+<%= f.text_field :name, class: "form-control", placeholder: "レーベル名を入力" %><br>
+<%= f.submit "投稿", class: "form-create" %>
+<% end %>
+</div>

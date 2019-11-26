@@ -1,0 +1,21 @@
+<% if @review.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @review.errors.count %>件のエラーが発生しました。</h2>
+      <ul>
+      <% @review.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<h1>レビュー投稿</h1>
+
+<%= form_for(@review) do |f| %>
+	<h4>本文</h4>
+  <%= hidden_field_tag :product_id, @product.id %>
+	<%= f.text_area :review, rows:'5', class: "form-control", placeholder: "コメントここに" %>
+	<%= f.submit "投稿" %>
+<% end %>
+
+<%= link_to "商品へ戻る", product_path(@product), :class => "btn btn-primary" %>

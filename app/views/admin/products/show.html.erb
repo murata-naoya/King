@@ -1,0 +1,94 @@
+<div id="product-show">
+
+	<div class="col-md-5">
+		<h2 class="product-title">商品詳細</h2>
+		<div class="jacket-img-circle">
+		<%= attachment_image_tag @product, :jacket_image, :fill, 150, 150, fallback: "no_image.jpg" %>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12 wrapper-review">
+				<h2>レビュー</h2>
+
+				<table class="table table-striped">
+					<tr>
+						<th>ユーザ</th>
+						<th>レビュー</th>
+						<th></th>
+						<th></th>
+					</tr>
+
+					<% @product.reviews.each do |review| %>
+					<tr>
+						<th><%= attachment_image_tag review.user, :profile_image, :size => '40x40', :class => 'img-circle', fallback: "no_image.jpg" %>
+							<br><%= review.user.full_name(review.user) %></th>
+						<th class="review-text"><%= review.review %></th>
+						<th><%= link_to "編集", edit_review_path(review) %></th>
+						<th><%= link_to "削除", review_path(review), method: :delete %> </th>
+					</tr>
+					<% end %>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6  col-md-offset-1 wrapper-review">
+		<div class="product-id">
+			商品ID：<%= @product.id %>
+		</div><br>
+
+		<div class="product-name">
+			シングル/アルバム名：<%= @product.product_name %>
+		</div><br>
+
+		<% artist = Artist.with_discarded.find(@product.artist_id) %>
+		<div class="product-artitst-name">
+			アーティスト名：<%= artist.name %>
+		</div><br>
+
+		<div class="product-price">
+			価格：<%= @product.price %>円(税込)
+		</div><br>
+
+		<div class="product-stock">
+			在庫数：<%= @stock %>
+		</div><br>
+
+		<div class="product-status">
+			ステータス：<%= @product.sell_status %>
+		</div><br>
+
+		<% label = Label.with_discarded.find(@product.label_id) %>
+		<div class="product-label-name">
+			レーベル名：<%= label.name %>
+		</div><br>
+
+		<% genre = Genre.with_discarded.find(@product.genre_id) %>
+		<div class="product-genre-name">
+			ジャンル：<%= genre.name %>
+		</div><br>
+
+		<div class="product-song-name wrapper-review">
+			<h4 class="">曲一覧</h4>
+			<% @discs.each.with_index(1) do |disc, index| %>
+					<%= (index) %>枚目
+			<table class="table table-striped">
+				<tr>
+					<th>曲番号</th>
+					<th>曲名</th>
+				</tr>
+				<% disc.songs.each.with_index(1) do |song,index| %>
+					<tr>
+						<th><%= index %></th>
+						<th><%= song.name %></th>
+					</tr>
+					<% end %>
+			</table>
+			<% end %>
+		</div>
+	</div>
+	<% if @product.discarded_at.nil? %>
+	 <%= link_to "編集", edit_admin_product_path(@product), class: "btn btn-primary" %>
+	 <%= link_to "削除", admin_product_path(@product), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger" %>
+	<% end %>
+</div>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kingdom</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div id="whole">
+      <header id="header">
+        <div class="header-content clearfix">
+          <div class="header-left">
+            <h1 class="header-logo">Kingdom</h1>
+          </div>
+          <div class="header-right">
+            <nav class="nav-content">
+              <ul class="nav-list">
+                <% if admin_signed_in? %>
+                <li class="nav-item">
+                  <%= link_to "ユーザ一覧", admin_users_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                   <%= link_to "商品一覧", admin_products_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "アーティスト一覧", admin_artists_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "ジャンル一覧", admin_genres_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "レーベル一覧", admin_labels_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "受注一覧", admin_orders_receive_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "入荷履歴", admin_arrivals_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, style:"color:white;" %>
+                </li>
+                <% elsif user_signed_in? %>
+                <li class="nav-item">
+                  <%= link_to "マイページ", user_path(current_user), style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "カート", carts_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                   <%= link_to "商品一覧", products_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "購入履歴", orders_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, style:"color:white;" %>
+                </li>
+                <% else %>
+                <li class="nav-item">
+                  <%= link_to "Top", root_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "ログイン", new_user_session_path, style:"color:white;"%>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "サインアップ", new_user_registration_path, style:"color:white;" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "商品一覧", products_path, style:"color:white;" %>
+                </li>
+                <% end %>
+              </ul>
+            </nav>
+          </div>
+      </header>
+
+        <div class="col-md-offset-11 col-md-1">
+          <% if user_signed_in? %>
+          <div class="profile-wrapper">
+            <%= attachment_image_tag current_user, :profile_image, format: 'jpeg', fallback: "no_image.jpg", size: "50x50", class:"pic_shape" %><br>
+            <div class="profile-wrapper-text"><%= current_user.last_name_characters %><%= current_user.first_name_characters %></div>
+          </div>
+          <% end %>
+        </div>
+
+    <div class="container fix">
+        <div class="row">
+          <% if flash[:notice] %>
+            <div class="flash">
+              <%= flash[:notice] %>
+            </div>
+          <% end %>
+            <%= yield %>
+        </div>
+    </div>
+
+
+    <footer>
+      <p class="footer-text">©kingdom.Inc</p>
+    </footer>
+  </div>
+  </body>
+</html>

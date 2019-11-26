@@ -1,0 +1,21 @@
+<h1>入荷履歴</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>入荷日時</th>
+            <th>商品名</th>
+            <th>入荷枚数</th>
+        </tr>
+    </thead>
+    <% @arrivals.each do |arrival| %>
+    <tbody>
+        <tr>
+            <th><%= arrival.arrival_date.strftime('%Y年%m月%d日') %></th>
+            <th><%= arrival.product.product_name %></th>
+            <th><%= arrival.arrival_count %></th>
+        </tr>
+    </tbody>
+    <% end %>
+</table>
+    
+

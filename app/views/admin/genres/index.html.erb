@@ -1,0 +1,25 @@
+<div id="genres-index">
+	<h1>ジャンル一覧</h1><br>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>ジャンル名</th>
+			<th>編集</th>
+			<th>削除</th>
+		</tr>
+		<% @genres.each do |genre| %>
+		<tr>
+			<th><%= genre.id %></th>
+			<th><%= genre.name %></th>
+			<% if genre.discarded_at.nil? %>
+				<th><%= link_to "編集", edit_admin_genre_path(genre) %></th>
+				<th><%= link_to "削除", admin_genre_path(genre), method: :delete, "data-confirm" => "本当に削除しますか？" %></th>
+			<% else %>
+			  <th></th>
+				<th>削除済み</th>
+			<% end %>
+		</tr>
+		<% end %>
+	</table><br>
+	<%= link_to "ジャンルを追加する", new_admin_genre_path %>
+</div>
